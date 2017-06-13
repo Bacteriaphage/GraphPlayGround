@@ -1,0 +1,30 @@
+{
+  "name": "hankserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha"
+  },
+  "keywords": [
+    "aha"
+  ],
+  "author": "hank",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.28",
+    "prompt": "^1.0.0",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "es6": "0.0.7",
+    "mocha": "^3.4.2",
+    "mongodb": "^2.2.28",
+    "mongoose": "^4.10.5"
+  }
+}
