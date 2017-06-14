@@ -1,161 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Scene With Three.js</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="../resource/script/build/three.js"></script>
-<script src="../resource/script/cameraControl.js"></script>
-<script src="../resource/script/eventTrigger.js"></script>
-<script src="../resource/script/formSubmit.js"></script>
-<script src="../resource/script/objectManagement.js"></script>
-<link href="../resource/style/layout.css" rel="stylesheet">
-</head>
-<body>
-    <script>
-        var cinit = CameraGenerator.getCamera(0, 0, 5, 0, 0, 0);
+    <head>
+        <title>Welcome to PlayGround</title>
+        <script src="../resource/script/playground/build/three.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet"  href="../resource/style/indexLayout.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="../resource/script/index/formSubmit.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <script>
+        $(document).ready(function(){
+            window.addEventListener('resize', onWindowResize, false);            
+        });
+        function onWindowResize(){
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.add(new THREE.Vector3(cinit.from_x, cinit.from_y, cinit.from_z));
+        camera.position.add(new THREE.Vector3(0, 0, 5));
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x000000, 1);
         renderer.domElement.id = "MainWindow";
         document.body.appendChild(renderer.domElement);
         
-        var object = {};
+        var object = [];
 
-//        var geometry = new THREE.BoxGeometry(1, 1, 1);
-//        var material = new THREE.MeshLambertMaterial({ color: 0x00ff00});
-//        var cube = new THREE.Mesh(geometry, material);
-//        cube.position.add(new THREE.Vector3(0.3, 0.5, 0));
-//        object.push(cube);
-//
-//        geometry = new THREE.SphereGeometry(1.5, 128, 96);
-//        material = new THREE.MeshLambertMaterial({ color: 0xffff00});
-//        var sphere = new THREE.Mesh(geometry, material);
-//        sphere.position.add(new THREE.Vector3(-0.5, -0.5, 0.5));
-//        scene.add(sphere);
-//        object.push(sphere);
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var material = new THREE.MeshLambertMaterial({ color: 0x00ff00});
+        var cube = new THREE.Mesh(geometry, material);
+        cube.position.add(new THREE.Vector3(0.3, 0.5, 0));
+        object.push(cube);
 
-//        for (var i = 0; i < object.length; i++){
-//            scene.add(object[i]);
-//        }
-        var Initial = <%- JSON.stringify(Objects) %>;
-        for(var i = 0; i < Initial.cuboid.length; i++){
-            ObjManager.cuboid.add(Initial.cuboid[i], Initial.cuboid[i].id);
-        }
-        for(var i = 0; i < Initial.sphere.length; i++){
-            ObjManager.sphere.add(Initial.sphere[i], Initial.sphere[i].id);
+        geometry = new THREE.SphereGeometry(0.5, 8, 6);
+        material = new THREE.MeshLambertMaterial({ color: 0xffff00});
+        var sphere = new THREE.Mesh(geometry, material);
+        sphere.position.add(new THREE.Vector3(-0.5, -0.5, 0.5));
+        scene.add(sphere);
+        object.push(sphere);
+
+        for (var i = 0; i < object.length; i++){
+            scene.add(object[i]);
         }
         var ambientLight = new THREE.AmbientLight(0x202020);
         scene.add(ambientLight);
 
         var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(0, 1, 0);
+        directionalLight.position.set(1, 1, 1);
         //		scene.add(directionalLight.target);
         scene.add(directionalLight);
-        
+        var axis = new THREE.Vector3(1, 0, 1);
+        axis = axis.normalize();
+        var Qua = new THREE.Quaternion();
+        Qua.setFromAxisAngle(axis, 0.05);
         var render = function(){
             requestAnimationFrame(render);
-            cprop = CameraGenerator.getCamera();
-            camera.position.set(cprop.from_x, cprop.from_y, cprop.from_z);
-            camera.lookAt(new THREE.Vector3(cprop.look_x, cprop.look_y, cprop.look_z));
+            object[0].rotation.x += 0.05;
+            object[0].rotation.y += 0.05;
+            object[1].quaternion.premultiply(Qua);
             renderer.render(scene, camera);
         }
         render();
-    </script>
-	<div id="PanelToggle">
-		Panel-off
-	</div>
-
-	<div id="CameraToggle">
-		Camera-fixed
-	</div>
-
-	<div id="ControlPanel">
-<!--    <div class="tab">
-            <button class="tablinks" id="addButton">Add</button>
-            <button class="tablinks" id="editButton">Edit</button>
-            <button class="tablinks" id="deleteButton">Delete</button>
+        </script>
+        <div id="logZone" class="well well-lg">
+            <h1>Login</h1>
+            <form id="login">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                </div>  
+                <input type="submit" id="sign-in" value="Sign In" class="btn btn-success"/>
+            </form>
+            <input type="button" id="register" value="Register" class="btn btn-danger"/>
         </div>
-        <div id="add" class="tabcontent">
-            <form>
-                
-            </form>    
-        </div>
--->
-        <form id="add-cuboid">
-            x:
-            <input type="text" id="cuboid-x"/>
-            <br>
-            y:
-            <input type="text" id="cuboid-y"/>
-            <br>
-            z:
-            <input type="text" id="cuboid-z"/>
-            <br>
-            length:
-            <input type="text" id="cuboid-length"/>
-            <br>
-            width:
-            <input type="text" id="cuboid-width"/>
-            <br>
-            height:
-            <input type="text" id="cuboid-height"/>
-            <br>
-            color:
-            <input type="text" id="cuboid-color"/>
-            <br>
-            <input type="submit" value="Submit"/>
-        </form>
-
-        <form id="add-sphere">
-            x:
-            <input type="text" id="sphere-x"/>
-            <br>
-            y:
-            <input type="text" id="sphere-y"/>
-            <br>
-            z:
-            <input type="text" id="sphere-z"/>
-            <br>
-            radius:
-            <input type="text" id="sphere-radius"/>
-            <br>
-            widthSegments:
-            <input type="text" id="sphere-widthSegments"/>
-            <br>
-            heightSegments:
-            <input type="text" id="sphere-heightSegments"/>
-            <br>
-            color:
-            <input type="text" id="sphere-color"/>
-            <br>
-            <input type="submit" value="Submit"/>
-        </form>
-	</div>
-    <div id="edit-delete">
-        <div id="object-attribute"></div>
-        <br>
-        <div id="object-view"></div>
-        <input type="hidden" id="object-id"/>
-        <form id="edit-object">
-            x:
-            <input type="text" id="object-x"/>
-            y:
-            <input type="text" id="object-y"/>
-            z:
-            <input type="text" id="object-z"/>
-            <br>
-            color:
-            <input type="text" id="object-color"/>
-            <div id="special-traits"></div>
-            <input type="submit" value="Edit"/>
-            <br>
-        </form>
-        <form id="delete-object">
-            <input type="submit" value-"Delete"/>
-        </form>
-    </div>
-</body>
+    </body>
 </html>

@@ -1,8 +1,9 @@
 var Cuboid = {};
 const Shapes = require('../resource/model/shapes');
 
-Cuboid.addToDB = function(cube, fn){
+Cuboid.addToDB = function(cube, email, fn){
     var newCube = new Shapes.cuboid({
+        email : email,
         x: parseFloat(cube.body.cuboidx),
         y: parseFloat(cube.body.cuboidy),        
         z: parseFloat(cube.body.cuboidz),
@@ -21,8 +22,8 @@ Cuboid.addToDB = function(cube, fn){
         }
     });
 };
-Cuboid.findall = function(fn){
-    Shapes.cuboid.find({}).then(function(result){
+Cuboid.findall = function(email, fn){
+    Shapes.cuboid.find({email: email}).then(function(result){
         fn(result);
     });
 };
@@ -37,5 +38,8 @@ Cuboid.editInDB = function(cube, fn){
         height: parseFloat(cube.cuboidheight),
         color: cube.cuboidcolor
     }}, fn);
+}
+Cuboid.deleteInDB = function(cube, fn){
+    Shapes.cuboid.deleteOne({_id: cube.id}, fn);
 }
 module.exports = Cuboid;

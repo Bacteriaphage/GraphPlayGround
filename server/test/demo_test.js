@@ -1,5 +1,6 @@
 const assert = require('assert');
 const Shapes = require('../resource/model/shapes');
+const Account = require('../resource/model/accounts');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/playgrounddb');
@@ -54,7 +55,6 @@ describe('db test', function(){
             done();
         });
     }); 
-    */
     it('remove all', function(done){
         Shapes.cuboid.remove({}).then(function(){
             Shapes.cuboid.find({}).then(function(result){
@@ -68,6 +68,16 @@ describe('db test', function(){
                 });
             });
         });
+    }); 
+    */
+    it('add one account', function(done){
+        var newAccount =new Account({
+            email: "123@123.com",
+            password: "123"
+        });
+        newAccount.save().then(function(){
+            assert(!newAccount.isNew);
+            done(); 
+        });
     });
-    
 });

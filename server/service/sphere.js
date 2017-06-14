@@ -1,8 +1,9 @@
 var Sphere = {};
 const Shapes = require('../resource/model/shapes');
 
-Sphere.addToDB = function(ball, fn){
+Sphere.addToDB = function(ball, email, fn){
     var newBall = new Shapes.sphere({
+        email: email,
         x: parseFloat(ball.body.spherex),
         y: parseFloat(ball.body.spherey),        
         z: parseFloat(ball.body.spherez),
@@ -21,8 +22,8 @@ Sphere.addToDB = function(ball, fn){
         }
     });
 };
-Sphere.findall = function(fn){
-    Shapes.sphere.find({}).then(function(result){
+Sphere.findall = function(email, fn){
+    Shapes.sphere.find({email:email}).then(function(result){
         fn(result);
     });
 };
@@ -36,5 +37,9 @@ Sphere.editInDB = function(ball, fn){
         heightsegments: parseFloat(ball.sphereheightsegments),
         color: ball.spherecolor
     }}, fn);
+}
+
+Sphere.deleteInDB = function(ball, fn){
+    Shapes.sphere.deleteOne({_id: ball.id}, fn);
 }
 module.exports = Sphere;

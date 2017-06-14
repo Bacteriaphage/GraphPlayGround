@@ -3,6 +3,7 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const CuboidSchema = new Schema({
+    email: String,
     x: Number,
     y: Number,
     z: Number,
@@ -16,6 +17,7 @@ const CuboidSchema = new Schema({
 const Cuboid = mongoose.model('cuboid', CuboidSchema);
 
 const SphereSchema = new Schema({
+    email: String,
     x: Number,
     y: Number,
     z: Number,
