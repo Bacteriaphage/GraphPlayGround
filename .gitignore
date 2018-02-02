@@ -1,0 +1,7 @@
+server/data/**
+server/lab1/**
+server/node_modules/**
+log
+package.json
+package-lock.json
+
