@@ -40,3 +40,14 @@ canvas{
 	color: #ff0000;
 	z-index: 99
 }
+#CoordinateToggle{
+	position: absolute;
+    font-size: 70%;
+	top: 25px;
+	right: 10px;
+	width: auto;
+	height: auto;
+	color: #ff0000;
+	z-index: 99
+    
+}

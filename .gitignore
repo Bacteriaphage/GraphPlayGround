@@ -1,7 +1,7 @@
-server/data/**
-server/lab1/**
-server/node_modules/**
-log
-package.json
-package-lock.json
+./server/data/
+./server/lab1/
+./server/node_modules/
+./server/log
+./server/package.json
+./server/package-lock.json
 

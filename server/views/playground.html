@@ -24,22 +24,6 @@
         
         var object = {};
 
-//        var geometry = new THREE.BoxGeometry(1, 1, 1);
-//        var material = new THREE.MeshLambertMaterial({ color: 0x00ff00});
-//        var cube = new THREE.Mesh(geometry, material);
-//        cube.position.add(new THREE.Vector3(0.3, 0.5, 0));
-//        object.push(cube);
-//
-//        geometry = new THREE.SphereGeometry(1.5, 128, 96);
-//        material = new THREE.MeshLambertMaterial({ color: 0xffff00});
-//        var sphere = new THREE.Mesh(geometry, material);
-//        sphere.position.add(new THREE.Vector3(-0.5, -0.5, 0.5));
-//        scene.add(sphere);
-//        object.push(sphere);
-
-//        for (var i = 0; i < object.length; i++){
-//            scene.add(object[i]);
-//        }
         var Initial = <%- JSON.stringify(Objects) %>;
         for(var i = 0; i < Initial.cuboid.length; i++){
             ObjManager.cuboid.add(Initial.cuboid[i], Initial.cuboid[i].id);
@@ -71,6 +55,9 @@
 	<div id="CameraToggle">
 		Camera-fixed
 	</div>
+    <div id="CoordinateToggle">
+        Coordinate-off
+    </div>
     <input type="button" id="log-out" value="logout"/>
 	<div id="ControlPanel">
         <form id="add-cuboid">

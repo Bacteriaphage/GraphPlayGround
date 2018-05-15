@@ -30,6 +30,19 @@ const SphereSchema = new Schema({
 
 const Sphere = mongoose.model('sphere', SphereSchema);
 
+const LineSchema = new Schema({
+    email: String,
+    x1: Number,
+    y1: Number,
+    z1: Number,
+    x2: Number,
+    y2: Number,
+    z2: Number,
+    color: String
+});
+
+const Line = mongoose.model('line', LineSchema);
+
 module.exports = {
     cuboid: Cuboid,
     sphere: Sphere 

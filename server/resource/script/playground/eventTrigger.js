@@ -22,7 +22,8 @@ $(document).ready(function(){
 
 	// Camera free or fixed
 	$(this).on("keydown", function(event){
-		if(event.which == 67){
+        // toggle camera fixing
+		if(event.which == 67 && !event.ctrlKey){
 			if($("#CameraToggle").text() == "Camera-fixed"){
 				$("#CameraToggle").text("Camera-free");
 				$("#CameraToggle").css("color", "#00ff00");
@@ -35,7 +36,8 @@ $(document).ready(function(){
 				document.getElementById("MainWindow").removeEventListener("mousedown", startMove);
 				document.getElementById("MainWindow").removeEventListener("mouseup", endMove);
 			}
-		}else if($("#CameraToggle").text() == "Camera-free" && (event.which == 87 || event.which == 65 || event.which == 68 || event.which == 83)){
+        // camera move
+		}else if(!event.ctrlKey && ($("#CameraToggle").text() == "Camera-free" && (event.which == 87 || event.which == 65 || event.which == 68 || event.which == 83))){
 			cameraAnchor = CameraGenerator.getCamera();
 			ori = new THREE.Vector3(cameraAnchor.from_x, cameraAnchor.from_y, cameraAnchor.from_z);
 			des = new THREE.Vector3(cameraAnchor.look_x, cameraAnchor.look_y, cameraAnchor.look_z);
@@ -58,8 +60,19 @@ $(document).ready(function(){
 				cameraAnchor.transformCamera(right.x * 0.05 , right.y * 0.05, right.z * 0.05);
 				break;
 			}
-
 		}
+        else if(event.ctrlKey){
+            if(event.which==67 && $("#CoordinateToggle").text()=="Coordinate-off"){
+                $("#CoordinateToggle").text("Coordinate-on");
+                $("#CoordinateToggle").css("color", "#00ff00");
+
+            }
+            else if(event.which==67 && $("#CoordinateToggle").text()=="Coordinate-on"){
+                $("#CoordinateToggle").text("Coordinate-off");
+                $("#CoordinateToggle").css("color", "#ff0000");
+                
+            }
+        }
 	});
     $("#MainWindow").click(function(event){
         if($("#CameraToggle").text() == "Camera-fixed"){
